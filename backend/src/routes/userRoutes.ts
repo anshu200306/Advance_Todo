@@ -20,7 +20,7 @@ const todoschema = z.object({
   dueDate:z.string().datetime().optional()
 })
 
-router.get("/", async (req: Request, res: Response<TodoResponse>) => {
+router.get("/", async (req: Request, res: Response<TodoResponse>) : Promise<any> => {
       const Validate = todoschema.safeParse(req.body);
       // const userId = req.user?.id;
 
