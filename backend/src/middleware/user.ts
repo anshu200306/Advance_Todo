@@ -1,10 +1,10 @@
 import { Response, Request, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { JWT_SECRET } from '../config';
 
-export const userMiddleware = async ( req: Response, res: Request, next: NextFunction ) => {
+export const userMiddleware = async ( req: any, res: Request, next: NextFunction ) => {
 
-    const token = req.cookie;
+    const token = req.cookies.authorization;
 
     if(!token){
         return {
@@ -13,7 +13,7 @@ export const userMiddleware = async ( req: Response, res: Request, next: NextFun
         }
     }
 
-    const userVerify = jwt.verify(token.name, JWT_SECRET);
+    const userVerify = jwt.verify(token.name, JWT_SECRET) as JwtPayload ;
 
     if(!userVerify){
         return {
